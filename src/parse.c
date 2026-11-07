@@ -6,13 +6,11 @@
 /*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:20 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 19:29:09 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/07 19:58:35 by hmnatsak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include <string.h>
-#include <stdlib.h>
 
 
 int     is_valid_number(char *s)

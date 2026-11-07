@@ -6,24 +6,18 @@
 /*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:15 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 19:28:49 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/07 20:00:39 by hmnatsak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include <stdio.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	t_config	cfg;
+	long	start;
 
-	if (check_args(argc, argv))
-	{
-		fprintf(stderr, "Error: invalid arguments\n");
-		return (1);
-	}
-	fill_config(&cfg, argv);
-	printf("coders=%d burnout=%d sched=%d\n",
-		cfg.number_of_coders, cfg.time_to_burnout, cfg.scheduler);
+	start = get_time();
+	usleep(200000);
+	printf("%ld\n", get_time() - start);
 	return (0);
 }
