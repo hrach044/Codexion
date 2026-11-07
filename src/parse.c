@@ -6,7 +6,7 @@
 /*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:20 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 19:08:57 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/07 19:29:09 by hmnatsak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,14 @@ int check_args(int argc, char **argv)
 	return (0);
 }
 
+void	fill_config(t_config *cfg, char **argv)
+{
+	cfg->number_of_coders = atoi(argv[1]);
+	cfg->time_to_burnout = atoi(argv[2]);
+	cfg->time_to_compile = atoi(argv[3]);
+	cfg->time_to_debug = atoi(argv[4]);
+	cfg->time_to_refectore = atoi(argv[5]);
+	cfg->number_of_compiles_required = atoi(argv[6]);
+	cfg->dongle_cooldown = atoi(argv[7]);
+	cfg->scheduler = parse_scheduler(argv[8]);
+}
