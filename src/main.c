@@ -12,31 +12,26 @@
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	t_sim	sim;
-	int		i;
+	t_heap	h;
+	t_req	r;
 
-	if (check_args(argc, argv))
-	{
-		fprintf(stderr, "Error: invalid arguments\n");
-		return (1);
-	}
-	fill_config(&sim.cfg, argv);
-	if (init_sim(&sim))
-		return (1);
-	i = 0;
-	while (i < sim.cfg.number_of_coders)
-	{
-		pthread_create(&sim.threads[i], NULL, coder_routine, &sim.coders[i]);
-		i++;
-	}
-	i = 0;
-	while (i < sim.cfg.number_of_coders)
-	{
-		pthread_join(sim.threads[i], NULL);
-		i++;
-	}
-	destroy_sim(&sim);
+	heap_init(&h, 4);
+	r.key = 30;
+	r.id = 1;
+	heap_push(&h, r);
+	r.key = 10;
+	r.id = 2;
+	heap_push(&h, r);
+	r.key = 20;
+	r.id = 3;
+	heap_push(&h, r);
+	printf("%d\n", h.data[0].id);
+	r.key = 10;
+	r.id = 1;
+	heap_push(&h, r);
+	printf("%d\n", h.data[0].id);
+	free(h.data);
 	return (0);
 }

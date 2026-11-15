@@ -60,6 +60,18 @@ typedef struct s_coder
 	t_dongle	*right;
 }	t_coder;
 
+typedef struct  s_req
+{
+	long	key;
+	int		id;
+}	t_req;
+
+typedef struct s_heap
+{
+	t_req	*data;
+	int		size;
+}	t_heap;
+
 
 int     is_valid_number(char *s);
 int 	parse_scheduler(char *s);
@@ -74,5 +86,8 @@ int		try_take_dongle(t_dongle *d);
 void	release_dongle(t_dongle *d, long cooldown);
 int		init_sim(t_sim *sim);
 void	destroy_sim(t_sim *sim);
+int		heap_init(t_heap *h, int capacity);
+int		req_less(t_req a, t_req b);
+void	heap_push(t_heap *h, t_req r);
 
 #endif
