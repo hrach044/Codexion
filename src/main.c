@@ -16,6 +16,7 @@ int	main(void)
 {
 	t_heap	h;
 	t_req	r;
+	int		i;
 
 	heap_init(&h, 4);
 	r.key = 30;
@@ -27,11 +28,12 @@ int	main(void)
 	r.key = 20;
 	r.id = 3;
 	heap_push(&h, r);
-	printf("%d\n", h.data[0].id);
-	r.key = 10;
-	r.id = 1;
-	heap_push(&h, r);
-	printf("%d\n", h.data[0].id);
+	i = 0;
+	while (i < 3)
+	{
+		printf("%d\n", heap_pop(&h).id);
+		i++;
+	}
 	free(h.data);
 	return (0);
 }

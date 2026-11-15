@@ -48,3 +48,35 @@ void	heap_push(t_heap *h, t_req r)
 		i = parent;
 	}
 }
+
+static void	swap_req(t_req *a, t_req *b)
+{
+	t_req	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+t_req	heap_pop(t_heap *h)
+{
+	t_req	top;
+	int		i;
+	int		c;
+
+	top = h->data[0];
+	h->size--;
+	h->data[0] = h->data[h->size];
+	i = 0;
+	while (2 * i + 1 < h->size)
+	{
+		c = 2 * i + 1;
+		if (c + 1 < h->size && req_less(h->data[c + 1], h->data[c]))
+			c++;
+		if (!req_less(h->data[c], h->data[i]))
+			break ;
+		swap_req(&h->data[i], &h->data[c]);
+		i = c;
+	}
+	return (top);
+}
