@@ -29,3 +29,17 @@ int	is_stopped(t_sim *sim)
 	pthread_mutex_unlock(&sim->log_mutex);
 	return (s);
 }
+
+void	mark_start(t_coder *c)
+{
+	pthread_mutex_lock(&c->sim->log_mutex);
+	c->last_start = get_time();
+	pthread_mutex_unlock(&c->sim->log_mutex);
+}
+
+void	count_compile(t_coder *c)
+{
+	pthread_mutex_lock(&c->sim->log_mutex);
+	c->compiles++;
+	pthread_mutex_unlock(&c->sim->log_mutex);
+}

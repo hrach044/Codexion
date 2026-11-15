@@ -36,7 +36,7 @@ void	take_dongle(t_dongle *d, t_coder *c)
 	else
 		me.key = c->last_start + c->sim->cfg.time_to_burnout;
 	heap_push(&d->queue, me);
-		while ((d->in_use || d->queue.data[0].id != c->id)
+	while ((d->in_use || d->queue.data[0].id != c->id)
 		&& !is_stopped(c->sim))
 		pthread_cond_wait(&d->cond, &d->mutex);
 	if (is_stopped(c->sim))

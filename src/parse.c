@@ -12,36 +12,35 @@
 
 #include "codexion.h"
 
-
-int     is_valid_number(char *s)
+int	is_valid_number(char *s)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!s[0])
-        return (0);
-    while (s[i])
-    {
-        if (s[i] < '0' || s[i] > '9')
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!s[0])
+		return (0);
+	while (s[i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int 	parse_scheduler(char *s)
+int	parse_scheduler(char *s)
 {
-    if (strcmp(s, "fifo") == 0)
-        return (0);
+	if (strcmp(s, "fifo") == 0)
+		return (0);
 	else if (strcmp(s, "edf") == 0)
 		return (1);
 	return (-1);
 }
 
-int check_args(int argc, char **argv)
+int	check_args(int argc, char **argv)
 {
-	int i;
-	
+	int	i;
+
 	if (argc != 9)
 		return (1);
 	i = 1;

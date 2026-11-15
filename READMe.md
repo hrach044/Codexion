@@ -91,7 +91,7 @@ the last line printed) or, silently, when every coder has compiled at least
 | `src/parse.c` | argument validation and conversion |
 | `src/init.c`, `src/cleanup.c` | creation and destruction of the shared state |
 | `src/time.c` | millisecond clock and precise sleep |
-| `src/log.c` | serialized logging and the stop flag reader |
+| `src/log.c` | serialized logging, plus the helpers that update shared state under the log mutex |
 | `src/coder.c` | life cycle of one coder |
 | `src/dongle.c` | taking and releasing a dongle, cooldown |
 | `src/heap.c` | priority queue used for fifo and edf |

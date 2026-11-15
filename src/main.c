@@ -12,11 +12,36 @@
 
 #include "codexion.h"
 
+static void	start_threads(t_sim *sim, pthread_t *mon)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->cfg.number_of_coders)
+	{
+		pthread_create(&sim->threads[i], NULL, coder_routine, &sim->coders[i]);
+		i++;
+	}
+	pthread_create(mon, NULL, monitor_routine, sim);
+}
+
+static void	join_threads(t_sim *sim, pthread_t mon)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->cfg.number_of_coders)
+	{
+		pthread_join(sim->threads[i], NULL);
+		i++;
+	}
+	pthread_join(mon, NULL);
+}
+
 int	main(int argc, char **argv)
 {
 	t_sim		sim;
 	pthread_t	mon;
-	int			i;
 
 	if (check_args(argc, argv))
 	{
@@ -26,20 +51,8 @@ int	main(int argc, char **argv)
 	fill_config(&sim.cfg, argv);
 	if (init_sim(&sim))
 		return (1);
-	i = 0;
-	while (i < sim.cfg.number_of_coders)
-	{
-		pthread_create(&sim.threads[i], NULL, coder_routine, &sim.coders[i]);
-		i++;
-	}
-	pthread_create(&mon, NULL, monitor_routine, &sim);
-	i = 0;
-	while (i < sim.cfg.number_of_coders)
-	{
-		pthread_join(sim.threads[i], NULL);
-		i++;
-	}
-	pthread_join(mon, NULL);
+	start_threads(&sim, &mon);
+	join_threads(&sim, mon);
 	destroy_sim(&sim);
 	return (0);
 }

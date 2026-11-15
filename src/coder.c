@@ -25,7 +25,7 @@ static void	lonely_coder(t_coder *c)
 		usleep(1000);
 }
 
-static void take_two(t_coder *c)
+static void	take_two(t_coder *c)
 {
 	if (c->left == c->right)
 	{
@@ -44,23 +44,9 @@ static void take_two(t_coder *c)
 	}
 }
 
-static void	mark_start(t_coder *c)
-{
-	pthread_mutex_lock(&c->sim->log_mutex);
-	c->last_start = get_time();
-	pthread_mutex_unlock(&c->sim->log_mutex);
-}
-
-static void	count_compile(t_coder *c)
-{
-	pthread_mutex_lock(&c->sim->log_mutex);
-	c->compiles++;
-	pthread_mutex_unlock(&c->sim->log_mutex);
-}
-
 void	*coder_routine(void *arg)
 {
-	t_coder *coder;
+	t_coder	*coder;
 
 	coder = (t_coder *)arg;
 	while (!is_stopped(coder->sim))
