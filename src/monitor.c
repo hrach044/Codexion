@@ -26,6 +26,26 @@ static void	wake_all(t_sim *sim)
 	}
 }
 
+static int	all_done(t_sim *sim)
+{
+	int	i;
+	int	done;
+
+	done = 1;
+	pthread_mutex_lock(&sim->log_mutex);
+	i = 0;
+	while (i < sim->cfg.number_of_coders)
+	{
+		if (sim->coders[i].compiles < sim->cfg.number_of_compiles_required)
+			done = 0;
+		i++;
+	}
+	if (done)
+		sim->stop = 1;
+	pthread_mutex_unlock(&sim->log_mutex);
+	return (done);
+}
+
 static int	check_coder(t_sim *sim, int i)
 {
 	long	now;
@@ -43,24 +63,29 @@ static int	check_coder(t_sim *sim, int i)
 	return (dead);
 }
 
+static int	scan(t_sim *sim)
+{
+	int	i;
+
+	if (all_done(sim))
+		return (1);
+	i = 0;
+	while (i < sim->cfg.number_of_coders)
+	{
+		if (check_coder(sim, i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	*monitor_routine(void *arg)
 {
 	t_sim	*sim;
-	int		i;
 
 	sim = (t_sim *)arg;
-	while (1)
-	{
-		i = 0;
-		while (i < sim->cfg.number_of_coders)
-		{
-			if (check_coder(sim, i))
-			{
-				wake_all(sim);
-				return (NULL);
-			}
-			i++;
-		}
+	while (!scan(sim))
 		usleep(1000);
-	}
+	wake_all(sim);
+	return (NULL);
 }

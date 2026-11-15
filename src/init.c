@@ -41,6 +41,7 @@ int	init_sim(t_sim *sim)
 		sim->coders[i].left = &sim->dongles[i];
 		sim->coders[i].right = &sim->dongles[(i + 1) % n];
 		sim->coders[i].last_start = sim->start_time;
+		sim->coders[i].compiles = 0;
 		i++;
 	}
 	return (0);

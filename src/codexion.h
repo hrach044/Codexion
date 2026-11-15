@@ -74,6 +74,7 @@ typedef struct s_coder
 	t_dongle	*left;
 	t_dongle	*right;
 	long 		last_start;
+	int 		compiles;
 }	t_coder;
 
 
