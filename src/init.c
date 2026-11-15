@@ -44,7 +44,10 @@ int	init_sim(t_sim *sim)
 
 	sim->dongles_ready = 0;
 	sim->stop = 0;
+	sim->seq = 0;
 	pthread_mutex_init(&sim->log_mutex, NULL);
+	pthread_mutex_init(&sim->sched_mutex, NULL);
+	pthread_cond_init(&sim->sched_cond, NULL);
 	if (alloc_arrays(sim))
 		return (destroy_sim(sim), 1);
 	sim->start_time = get_time();

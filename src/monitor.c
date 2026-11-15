@@ -14,16 +14,9 @@
 
 static void	wake_all(t_sim *sim)
 {
-	int	i;
-
-	i = 0;
-	while (i < sim->cfg.number_of_coders)
-	{
-		pthread_mutex_lock(&sim->dongles[i].mutex);
-		pthread_cond_broadcast(&sim->dongles[i].cond);
-		pthread_mutex_unlock(&sim->dongles[i].mutex);
-		i++;
-	}
+	pthread_mutex_lock(&sim->sched_mutex);
+	pthread_cond_broadcast(&sim->sched_cond);
+	pthread_mutex_unlock(&sim->sched_mutex);
 }
 
 static int	all_done(t_sim *sim)

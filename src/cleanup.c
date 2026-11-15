@@ -25,6 +25,8 @@ void	destroy_sim(t_sim *sim)
 		i++;
 	}
 	pthread_mutex_destroy(&sim->log_mutex);
+	pthread_cond_destroy(&sim->sched_cond);
+	pthread_mutex_destroy(&sim->sched_mutex);
 	free(sim->dongles);
 	free(sim->coders);
 	free(sim->threads);

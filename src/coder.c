@@ -3,45 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   coder.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hrach <hrach@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:04 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 17:55:20 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/15 20:35:09 by hrach            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void	take(t_coder *c, t_dongle *d)
-{
-	take_dongle(d, c);
-	print_log(c->sim, c->id, "has taken a dongle");
-}
-
 static void	lonely_coder(t_coder *c)
 {
-	take(c, c->left);
+	print_log(c->sim, c->id, "has taken a dongle");
 	while (!is_stopped(c->sim))
 		usleep(1000);
 }
 
-static void	take_two(t_coder *c)
+static int	take_two(t_coder *c)
 {
 	if (c->left == c->right)
 	{
 		lonely_coder(c);
-		return ;
+		return (0);
 	}
-	if (c->left < c->right)
-	{
-		take(c, c->left);
-		take(c, c->right);
-	}
-	else
-	{
-		take(c, c->right);
-		take(c, c->left);
-	}
+	if (!acquire_dongles(c))
+		return (0);
+	print_log(c->sim, c->id, "has taken a dongle");
+	print_log(c->sim, c->id, "has taken a dongle");
+	return (1);
 }
 
 void	*coder_routine(void *arg)
@@ -51,15 +40,13 @@ void	*coder_routine(void *arg)
 	coder = (t_coder *)arg;
 	while (!is_stopped(coder->sim))
 	{
-		take_two(coder);
-		if (is_stopped(coder->sim))
+		if (!take_two(coder))
 			break ;
 		mark_start(coder);
 		print_log(coder->sim, coder->id, "is compiling");
 		msleep(coder->sim->cfg.time_to_compile);
 		count_compile(coder);
-		release_dongle(coder->left, coder->sim->cfg.dongle_cooldown);
-		release_dongle(coder->right, coder->sim->cfg.dongle_cooldown);
+		release_dongles(coder);
 		print_log(coder->sim, coder->id, "is debugging");
 		msleep(coder->sim->cfg.time_to_debug);
 		print_log(coder->sim, coder->id, "is refactoring");

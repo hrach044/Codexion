@@ -65,6 +65,9 @@ typedef struct s_sim
 	struct s_coder	*coders;
 	pthread_t		*threads;
 	int				dongles_ready;
+	pthread_mutex_t	sched_mutex;
+	pthread_cond_t	sched_cond;
+	long			seq;
 }	t_sim;
 
 typedef struct s_coder
@@ -86,8 +89,8 @@ void	print_log(t_sim *sim, int id, char *msg);
 void	*coder_routine(void *arg);
 void	msleep(long ms);
 int		init_dongle(t_dongle *d);
-void	take_dongle(t_dongle *d, t_coder *c);
-void	release_dongle(t_dongle *d, long cooldown);
+int		acquire_dongles(t_coder *c);
+void	release_dongles(t_coder *c);
 int		init_sim(t_sim *sim);
 void	destroy_sim(t_sim *sim);
 int		heap_init(t_heap *h, int capacity);
