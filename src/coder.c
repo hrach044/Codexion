@@ -32,17 +32,22 @@ static void take_two(t_coder *c)
 	}
 }
 
+static void	mark_start(t_coder *c)
+{
+	pthread_mutex_lock(&c->sim->log_mutex);
+	c->last_start = get_time();
+	pthread_mutex_unlock(&c->sim->log_mutex);
+}
+
 void	*coder_routine(void *arg)
 {
 	t_coder *coder;
-	int		i;
 
 	coder = (t_coder *)arg;
-	i = 0;
-	while (i < coder->sim->cfg.number_of_compiles_required)
+	while (!is_stopped(coder->sim))
 	{
 		take_two(coder);
-		coder->last_start = get_time();
+		mark_start(coder);
 		print_log(coder->sim, coder->id, "is compiling");
 		msleep(coder->sim->cfg.time_to_compile);
 		release_dongle(coder->left, coder->sim->cfg.dongle_cooldown);
@@ -51,7 +56,6 @@ void	*coder_routine(void *arg)
 		msleep(coder->sim->cfg.time_to_debug);
 		print_log(coder->sim, coder->id, "is refactoring");
 		msleep(coder->sim->cfg.time_to_refactor);
-		i++;
 	}
 	return (NULL);
 }

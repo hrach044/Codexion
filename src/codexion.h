@@ -59,6 +59,7 @@ typedef struct s_dongle
 typedef struct s_sim
 {
     t_config        cfg;
+	int stop;
     long            start_time;
     pthread_mutex_t log_mutex;
 	t_dongle		*dongles;
@@ -93,5 +94,7 @@ int		heap_init(t_heap *h, int capacity);
 int		req_less(t_req a, t_req b);
 void	heap_push(t_heap *h, t_req r);
 t_req	heap_pop(t_heap *h);
+int	is_stopped(t_sim *sim);
+void	*monitor_routine(void *arg);
 
 #endif

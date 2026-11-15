@@ -12,12 +12,11 @@
 
 #include "codexion.h"
 
-#include "codexion.h"
-
 int	main(int argc, char **argv)
 {
-	t_sim	sim;
-	int		i;
+	t_sim		sim;
+	pthread_t	mon;
+	int			i;
 
 	if (check_args(argc, argv))
 	{
@@ -33,12 +32,14 @@ int	main(int argc, char **argv)
 		pthread_create(&sim.threads[i], NULL, coder_routine, &sim.coders[i]);
 		i++;
 	}
+	pthread_create(&mon, NULL, monitor_routine, &sim);
 	i = 0;
 	while (i < sim.cfg.number_of_coders)
 	{
 		pthread_join(sim.threads[i], NULL);
 		i++;
 	}
+	pthread_join(mon, NULL);
 	destroy_sim(&sim);
 	return (0);
 }

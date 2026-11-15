@@ -29,6 +29,7 @@ int	init_sim(t_sim *sim)
 		return (1);
 	}
 	pthread_mutex_init(&sim->log_mutex, NULL);
+	sim->stop = 0;
 	i = 0;
 	sim->start_time = get_time();
 	while (i < n)
