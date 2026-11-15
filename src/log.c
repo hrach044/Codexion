@@ -11,3 +11,11 @@
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+void	print_log(t_sim *sim, int id, char *msg)
+{
+	pthread_mutex_lock(&sim->log_mutex);
+	printf("%ld %d %s\n", get_time() - sim->start_time, id, msg);
+	pthread_mutex_unlock(&sim->log_mutex);
+	
+}

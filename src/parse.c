@@ -64,7 +64,7 @@ void	fill_config(t_config *cfg, char **argv)
 	cfg->time_to_burnout = atoi(argv[2]);
 	cfg->time_to_compile = atoi(argv[3]);
 	cfg->time_to_debug = atoi(argv[4]);
-	cfg->time_to_refectore = atoi(argv[5]);
+	cfg->time_to_refactor = atoi(argv[5]);
 	cfg->number_of_compiles_required = atoi(argv[6]);
 	cfg->dongle_cooldown = atoi(argv[7]);
 	cfg->scheduler = parse_scheduler(argv[8]);

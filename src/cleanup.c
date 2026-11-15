@@ -11,3 +11,19 @@
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+void	destroy_sim(t_sim *sim)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->cfg.number_of_coders)
+	{
+		pthread_mutex_destroy(&sim->dongles[i].mutex);
+		i++;
+	}
+	pthread_mutex_destroy(&sim->log_mutex);
+	free(sim->dongles);
+	free(sim->coders);
+	free(sim->threads);
+}
