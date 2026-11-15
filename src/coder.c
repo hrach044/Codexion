@@ -18,8 +18,20 @@ static void	take(t_coder *c, t_dongle *d)
 	print_log(c->sim, c->id, "has taken a dongle");
 }
 
+static void	lonely_coder(t_coder *c)
+{
+	take(c, c->left);
+	while (!is_stopped(c->sim))
+		usleep(1000);
+}
+
 static void take_two(t_coder *c)
 {
+	if (c->left == c->right)
+	{
+		lonely_coder(c);
+		return ;
+	}
 	if (c->left < c->right)
 	{
 		take(c, c->left);
