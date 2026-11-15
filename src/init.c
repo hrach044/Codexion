@@ -30,15 +30,17 @@ int	init_sim(t_sim *sim)
 	}
 	pthread_mutex_init(&sim->log_mutex, NULL);
 	i = 0;
+	sim->start_time = get_time();
 	while (i < n)
 	{
-		init_dongle(&sim->dongles[i]);
+		if (init_dongle(&sim->dongles[i]))
+			return (1);
 		sim->coders[i].id = i + 1;
 		sim->coders[i].sim = sim;
 		sim->coders[i].left = &sim->dongles[i];
 		sim->coders[i].right = &sim->dongles[(i + 1) % n];
+		sim->coders[i].last_start = sim->start_time;
 		i++;
 	}
-	sim->start_time = get_time();
 	return (0);
 }

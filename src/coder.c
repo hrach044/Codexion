@@ -12,10 +12,9 @@
 
 #include "codexion.h"
 
-static void take(t_coder *c, t_dongle *d)
+static void	take(t_coder *c, t_dongle *d)
 {
-	while (!try_take_dongle(d))
-		usleep(100);
+	take_dongle(d, c);
 	print_log(c->sim, c->id, "has taken a dongle");
 }
 
@@ -42,7 +41,8 @@ void	*coder_routine(void *arg)
 	i = 0;
 	while (i < coder->sim->cfg.number_of_compiles_required)
 	{
-				take_two(coder);
+		take_two(coder);
+		coder->last_start = get_time();
 		print_log(coder->sim, coder->id, "is compiling");
 		msleep(coder->sim->cfg.time_to_compile);
 		release_dongle(coder->left, coder->sim->cfg.dongle_cooldown);

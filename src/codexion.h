@@ -34,12 +34,26 @@ typedef struct s_config
 	int		scheduler;
 }   t_config;
 
+typedef struct  s_req
+{
+	long	key;
+	int		id;
+}	t_req;
+
+typedef struct s_heap
+{
+	t_req	*data;
+	int		size;
+}	t_heap;
 
 typedef struct s_dongle
 {
 	pthread_mutex_t	mutex;
+	pthread_cond_t	cond;
+	t_heap			queue;
 	int				in_use;
 	long			free_at;
+	long			seq;
 }	t_dongle;
 
 typedef struct s_sim
@@ -58,19 +72,8 @@ typedef struct s_coder
 	t_sim		*sim;
 	t_dongle	*left;
 	t_dongle	*right;
+	long 		last_start;
 }	t_coder;
-
-typedef struct  s_req
-{
-	long	key;
-	int		id;
-}	t_req;
-
-typedef struct s_heap
-{
-	t_req	*data;
-	int		size;
-}	t_heap;
 
 
 int     is_valid_number(char *s);
@@ -81,8 +84,8 @@ long	get_time(void);
 void	print_log(t_sim *sim, int id, char *msg);
 void	*coder_routine(void *arg);
 void	msleep(long ms);
-void	init_dongle(t_dongle *d);
-int		try_take_dongle(t_dongle *d);
+int		init_dongle(t_dongle *d);
+void	take_dongle(t_dongle *d, t_coder *c);
 void	release_dongle(t_dongle *d, long cooldown);
 int		init_sim(t_sim *sim);
 void	destroy_sim(t_sim *sim);
