@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hrach <hrach@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:01 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 17:55:23 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/15 20:48:58 by hrach            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	destroy_sim(t_sim *sim)
 	i = 0;
 	while (i < sim->dongles_ready)
 	{
-		pthread_mutex_destroy(&sim->dongles[i].mutex);
-		pthread_cond_destroy(&sim->dongles[i].cond);
 		free(sim->dongles[i].queue.data);
 		i++;
 	}

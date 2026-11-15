@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmnatsak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hrach <hrach@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:13:57 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/07 20:00:03 by hmnatsak         ###   ########.fr       */
+/*   Updated: 2026/11/15 20:47:18 by hrach            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ typedef struct s_heap
 
 typedef struct s_dongle
 {
-	pthread_mutex_t	mutex;
-	pthread_cond_t	cond;
 	t_heap			queue;
 	int				in_use;
 	long			free_at;
-	long			seq;
 }	t_dongle;
 
 typedef struct s_sim

@@ -6,7 +6,7 @@
 /*   By: hrach <hrach@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 16:15:06 by hmnatsak          #+#    #+#             */
-/*   Updated: 2026/11/15 20:20:24 by hrach            ###   ########.fr       */
+/*   Updated: 2026/11/15 20:48:20 by hrach            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ int	init_dongle(t_dongle *d)
 {
 	if (heap_init(&d->queue, 2))
 		return (1);
-	pthread_mutex_init(&d->mutex, NULL);
-	pthread_cond_init(&d->cond, NULL);
 	d->in_use = 0;
 	d->free_at = 0;
-	d->seq = 0;
 	return (0);
 }
 
