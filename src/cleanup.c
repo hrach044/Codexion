@@ -17,7 +17,7 @@ void	destroy_sim(t_sim *sim)
 	int	i;
 
 	i = 0;
-	while (i < sim->cfg.number_of_coders)
+	while (i < sim->dongles_ready)
 	{
 		pthread_mutex_destroy(&sim->dongles[i].mutex);
 		pthread_cond_destroy(&sim->dongles[i].cond);

@@ -14,12 +14,14 @@
 
 int	init_dongle(t_dongle *d)
 {
+	if (heap_init(&d->queue, 2))
+		return (1);
 	pthread_mutex_init(&d->mutex, NULL);
 	pthread_cond_init(&d->cond, NULL);
 	d->in_use = 0;
 	d->free_at = 0;
 	d->seq = 0;
-	return (heap_init(&d->queue, 2));
+	return (0);
 }
 
 void	take_dongle(t_dongle *d, t_coder *c)

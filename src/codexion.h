@@ -65,6 +65,7 @@ typedef struct s_sim
 	t_dongle		*dongles;
 	struct s_coder	*coders;
 	pthread_t		*threads;
+	int 			dongles_ready;
 }   t_sim;
 
 typedef struct s_coder
